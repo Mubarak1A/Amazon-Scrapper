@@ -21,11 +21,13 @@ def get_product_price(soup):
     main_price_span = soup.find('span', class_='a-price')
     price_span = main_price_span.findAll('span')
     price = price_span[0].text.strip().replace(",", "")
-    try:
-            return price
-    except ValueError:
-            print("Value Obtained for Price could not be parsed")
-            exit()
+    return price
+
+#get product title
+def get_product_title(soup):
+     product_title = soup.find('span', id='productTitle')
+     title = product_title.text.strip()
+     return title
     
         
         
@@ -37,6 +39,7 @@ def extract_product_info(url):
     html = get_page_html(url=url)
     soup = bs4.BeautifulSoup(html, "lxml")
     product_info['price'] = get_product_price(soup)
+    product_info['title'] = get_product_title(soup)
     print(product_info)
 
 
