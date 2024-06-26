@@ -1,2 +1,2 @@
 # Amazon-Scrapper
-Python Script to Scrape the Amazon Websites Products
+Python Script that Scrape the Amazon Websites
