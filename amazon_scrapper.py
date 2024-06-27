@@ -20,8 +20,12 @@ def get_page_html(url):
 def get_product_price(soup):
     main_price_span = soup.find('span', class_='a-price')
     price_span = main_price_span.findAll('span')
-    price = price_span[0].text.strip().replace(",", "")
-    return price
+    
+    try:
+        price = float(price_span[0].text.strip('$'))
+        return(price)
+    except ValueError:
+        return('Value set to be float is not validated!')
 
 #get product title
 def get_product_title(soup):
@@ -29,8 +33,18 @@ def get_product_title(soup):
      title = product_title.text.strip()
      return title
     
-        
-        
+#get product rating
+def get_product_rating(soup):
+    main_rating_div = soup.find('div', class_='a-icon-row')
+    rating_section = main_rating_div.find('i', class_='a-icon')
+    rating_span = rating_section.find('span', class_='a-icon-alt')
+    
+    try:
+        rating = float(rating_span.text.split()[0])
+        return(rating)
+    except ValueError:
+        return('Value set to be float is not validated!')
+    
 
 #extract product info
 def extract_product_info(url):
@@ -40,6 +54,7 @@ def extract_product_info(url):
     soup = bs4.BeautifulSoup(html, "lxml")
     product_info['price'] = get_product_price(soup)
     product_info['title'] = get_product_title(soup)
+    product_info['rating'] = get_product_rating(soup)
     print(product_info)
 
 
